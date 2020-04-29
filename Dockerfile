@@ -1,18 +1,20 @@
-FROM node:13-alpine
- 
-WORKDIR /app
- 
+FROM node as builder
+WORKDIR /usr/app
 COPY package*.json ./
- 
 RUN yarn
- 
-COPY . /app
- 
-# RUN npx tsc
-# RUN npm run build
-# RUN npx prettier server.js --write
-# RUN npx eslint server.js --fix --quiet
- 
+COPY . . 
+
+FROM node
+WORKDIR /usr/app
+COPY package*.json ./
+RUN yarn
+
+COPY --from=builder /usr/app/ ./
+
+COPY config.docker.json ./config.json
+# COPY .env .
+
 EXPOSE 3000
  
 CMD yarn servestart
+

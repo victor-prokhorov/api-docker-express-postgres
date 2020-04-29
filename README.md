@@ -35,7 +35,7 @@ CREATE TABLE users(user_id SERIAL PRIMARY KEY, description VARCHAR(255));
 
 https://www.w3.org/Provider/Style/URI
 
-
+docker-compose up --build
 
 
 
